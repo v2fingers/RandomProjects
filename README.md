@@ -7,3 +7,5 @@ Random projects to do:
 - Linked list
 - Custom memory allocater
 - CPU and C emu
+- Archive format
+- Shell

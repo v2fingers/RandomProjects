@@ -2,9 +2,9 @@
 Random projects to do:
 
 - Dynamic arrays
-- Better string library
-- Logger library
 - Linked list
+
+- String library and logger
 - Custom memory allocater
 - CPU and C emu
 - Archive format

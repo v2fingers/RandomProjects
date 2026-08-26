@@ -23,14 +23,14 @@ int main() {
 
   node1->data = 13;
   node1->next = node2;
-  node1->back = NULL;
+  node1->back = node3;
 
   node2->data = 100;
   node2->next = node3;
   node2->back = node1;
 
   node3->data = 20;
-  node3->next = NULL;
+  node3->next = node1;
   node3->back = node2;
 
   struct Node *temp = node1;

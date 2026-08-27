@@ -1,7 +1,7 @@
-workspace "DArray"
+workspace "HellWorld"
 configurations { "Debug" }
 
-project "DArray"
+project "HelloWorld"
 kind "ConsoleApp"
 language "C"
 cdialect("C23")

@@ -1,0 +1,80 @@
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Memory_Stats {
+  uint64_t TotalAllocated;
+};
+
+static struct Memory_Stats stats;
+
+void *memory_zero(void *chunk, uint64_t size) { return memset(chunk, 0, size); }
+
+void memory_init() { memory_zero(&stats, sizeof(stats)); }
+void memory_shutdown() {}
+
+void *memory_copy(void *dest, const void *source, uint64_t size) {
+  return memcpy(dest, source, size);
+}
+
+void *memory_allocate(uint64_t size) {
+  stats.TotalAllocated += size;
+
+  void *chunk = malloc(size);
+  memory_zero(chunk, size);
+  return chunk;
+}
+
+void *memory_reallocate(void *chunk, uint64_t size, uint64_t newsize) {
+  stats.TotalAllocated -= size;
+  stats.TotalAllocated += newsize;
+  return realloc(chunk, newsize);
+}
+
+void memory_free(void *chunk, uint64_t size) {
+  stats.TotalAllocated -= size;
+  free(chunk);
+}
+
+void *memory_set(void *dest, int32_t value, uint64_t size) {
+  return memset(dest, value, size);
+}
+
+char *memory_getusage() {
+  char msg[64];
+
+  double value = (double)stats.TotalAllocated;
+  const char *unit = "B";
+
+  if (value >= 1024.0) {
+    value /= 1024.0;
+    unit = "KiB";
+  }
+  if (value >= 1024.0) {
+    value /= 1024.0;
+    unit = "MiB";
+  }
+  if (value >= 1024.0) {
+    value /= 1024.0;
+    unit = "GiB";
+  }
+
+  snprintf(msg, sizeof(msg), "System memory in use: %.2f %s", value, unit);
+  return strdup(msg);
+}
+
+int main() {
+  int numItems = 15;
+  int *myArray = memory_allocate(numItems * sizeof(int));
+
+  // Display the contents of the memory
+  for (int i = 0; i < numItems; i++) {
+    printf("%d \n", myArray[i]);
+  }
+  printf("%s \n", memory_getusage());
+
+  // Free the memory
+  memory_free(myArray, numItems * sizeof(int));
+  myArray = NULL;
+}

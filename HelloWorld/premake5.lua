@@ -5,7 +5,7 @@ project "HelloWorld"
 kind "ConsoleApp"
 language "C"
 cdialect("C23")
-targetdir "../bin/"
+targetdir "bin/"
 
 files { "**.h", "**.c" }
 

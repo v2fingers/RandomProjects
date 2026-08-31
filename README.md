@@ -5,7 +5,5 @@ Random projects to do:
 - CPU and C emu
 - Archive format
 - Shell
-
-Done:
 - Dynamic arrays
 - Linked list
